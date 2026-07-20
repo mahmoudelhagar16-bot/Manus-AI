@@ -68,10 +68,13 @@ interface FeedConsumptionDao {
  * التحقق من (totalWeightKg <= currentStockKg) يجب أن يتم قبل استدعاء هذه الدالة في الـ UseCase،
  * لكن يُعاد التحقق هنا أيضاً كخط دفاع أخير قبل الكتابة الفعلية.
  */
+@Dao
 abstract class FeedConsumptionTransactionDao {
 
-    protected abstract fun feedTypeDao(): FeedTypeDao
-    protected abstract fun feedConsumptionDao(): FeedConsumptionDao
+    @Transaction
+    open fun feedTypeDao(): FeedTypeDao = throw UnsupportedOperationException()
+    @Transaction
+    open fun feedConsumptionDao(): FeedConsumptionDao = throw UnsupportedOperationException()
 
     @Transaction
     open suspend fun recordConsumption(consumption: FeedConsumptionEntity): Result<Long> {

@@ -49,10 +49,13 @@ interface InventoryTransactionDao {
  * DAO مركّب: كل حركة (وارد/صادر) تُحدِّث currentStock في نفس الـ Transaction،
  * ويُمنع أي صادر يجعل الرصيد سالباً (قسم 5.7).
  */
+@Dao
 abstract class InventoryTransactionCompositeDao {
 
-    protected abstract fun itemDao(): InventoryItemDao
-    protected abstract fun transactionDao(): InventoryTransactionDao
+    @Transaction
+    open fun itemDao(): InventoryItemDao = throw UnsupportedOperationException()
+    @Transaction
+    open fun transactionDao(): InventoryTransactionDao = throw UnsupportedOperationException()
 
     @Transaction
     open suspend fun recordTransaction(transaction: InventoryTransactionEntity): Result<Long> {
