@@ -22,7 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.compose.runtime.collectAsState
 import com.farm.layermanager.domain.usecase.reports.DashboardSnapshot
 import com.farm.layermanager.ui.common.FullScreenLoading
 import com.farm.layermanager.ui.common.StatCard
@@ -36,7 +36,7 @@ fun DashboardScreen(
     onOpenReports: () -> Unit = {},
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
-    val snapshot by viewModel.snapshot.collectAsStateWithLifecycle()
+    val snapshot by viewModel.snapshot.collectAsState()
 
     Scaffold(
         topBar = {
